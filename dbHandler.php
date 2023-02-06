@@ -6,7 +6,7 @@ class dbHandler{
     private $host;
 
     function __construct(){
-        $this->name = "company_db";
+        $this->name = "challenge";
         $this->user = "root";
         $this->password = "";
         $this->host = "localhost";
@@ -43,9 +43,6 @@ class dbHandler{
         if(is_null($rowToSearch))$query = "SELECT $toSelect FROM `$table`";
         else $query = "SELECT $toSelect FROM `$table` WHERE $rowToSearch = ?";
         $sql = $db->prepare($query);
-        $file = fopen("test.txt","w");
-        fwrite($file,$query);
-        fwrite($file,$condition);
         if(is_null($rowToSearch))$sql->execute();
         else $sql->execute([$condition]);
         $resultQuery = $sql->get_result();
