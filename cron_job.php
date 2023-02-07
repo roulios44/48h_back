@@ -6,7 +6,6 @@ $result = $con->getInDB("*","addressAvalaible",null,null);
 $temp = $result;
 $conDistant = new dbHandler();
 $already = array();
-
 $first = true; 
 while(true){     
     $count = 0;     
