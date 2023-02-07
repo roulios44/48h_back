@@ -41,7 +41,9 @@ class dbHandler{
         } else {
             echo "there has been an issue with : " . $sql . " " . mysqli_error($con);
         }
+        $idInsert =$con->insert_id;
         mysqli_close($con);
+        return $idInsert;
     }
     public function getInDB(string $toSelect, string $table, string|null $rowToSearch, string|int|null $condition){
         $db = $this->connectDB();
@@ -49,9 +51,6 @@ class dbHandler{
         if(is_null($rowToSearch))$query = "SELECT $toSelect FROM `$table`";
         else $query = "SELECT $toSelect FROM `$table` WHERE $rowToSearch = ?";
         $sql = $db->prepare($query);
-        $file = fopen("test.txt","w");
-        fwrite($file,$query);
-        fwrite($file,$condition);
         if(is_null($rowToSearch))$sql->execute();
         else $sql->execute([$condition]);
         $resultQuery = $sql->get_result();
@@ -86,6 +85,21 @@ class dbHandler{
         $stmt = $db->prepare("DELETE FROM $table WHERE $rowToSearch = ?");
         $stmt->execute([$condition]);
         mysqli_close($db) ;
+    }
+    public function getInfoConnect(int $userID,int $userType){
+        $db = $this->connectDB();
+        $query = "
+        SELECT commandeLigne.id AS commandeId,productId,quantity,unitePrice,userId,type.id AS typeID,type.libelle 
+        FROM commandeLigne 
+        INNER JOIN type 
+        ON commandeLigne.userId = $userID WHERE $userType = type.id;";
+        $sql = $db->prepare($query);
+        $sql->execute();
+        $resultQuery = $sql->get_result();
+        $arrayData = [];
+        while($row = mysqli_fetch_assoc($resultQuery))array_push($arrayData,$row);
+        mysqli_close($db) ;
+        return $arrayData ;
     }
 }
 ?>
