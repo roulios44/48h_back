@@ -11,8 +11,6 @@ try{
     $mail = $decode["email"];
     $password = $decode["password"];
     $address = $decode["address"];
-    // $registrationDate = DateTime::createFromFormat("l dS F Y", $decode["registrationDate"]);
-    // $registrationDate = $registrationDate->format('d/m/Y');
     $registrationDate = new DateTime($decode["registrationDate"]);
     $userType = $decode["userType"];
     $user = new User($name,$surname,$password,$mail,$registrationDate,$address,$userType);
@@ -22,10 +20,13 @@ try{
         $sell = new Sell($sellName,$idUser);
         $sell->addSeller();
     }
+    echo(true);
 }catch(ERROR $e){
     fwrite($file,$e);
+    echo(false);
 }catch(Exception $e){
     fwrite($file,$e);
+    echo(false);
 }
 
 
