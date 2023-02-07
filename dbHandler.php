@@ -8,7 +8,7 @@ class dbHandler{
     public function __construct(){
         $this->name = "challenge";
         $this->user = "root";
-        $this->password = "root";
+        $this->password = "";
         $this->host = "localhost";
     }
     public function init(string $name,string $user,string $password,string $host){
@@ -97,7 +97,9 @@ class dbHandler{
         $sql->execute();
         $resultQuery = $sql->get_result();
         $arrayData = [];
-        while($row = mysqli_fetch_assoc($resultQuery))array_push($arrayData,$row);
+        while($row = mysqli_fetch_assoc($resultQuery)){
+            array_push($arrayData,$row);
+        }
         mysqli_close($db) ;
         return $arrayData ;
     }

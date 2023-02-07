@@ -15,22 +15,21 @@ try{
             // Here we use 1 has argument because we check the value of TypeID jsut before
             foreach($db->getInfoConnect($data["id"],1) as $info){
                 array_push($infoConnect,$info);
-                echo"hii";
+            }
+            if($infoConnect==[]){
+                $infoConnect = array("userType" => $data["userType"]);
             }
         }else{
-            echo"hii";
-            array_push($infoConnect,$data["typeID"]);
+            $infoConnect = array("userType" => $data["userType"]);
         }
         echo(json_encode($infoConnect));
     }else{
         echo("false");
     }
 }catch(ERROR $e){
-fwrite($file,$e);
-
+    fwrite($file,$e);
 }catch(Exception $e){
-fwrite($file,$e);
-
+    fwrite($file,$e);
 }
 
 ?>
