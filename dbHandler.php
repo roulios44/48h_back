@@ -54,6 +54,21 @@ class dbHandler{
         mysqli_close($db) ;
         return $arrayData ;
     }
+    public function getInDBWithInner(string $toSelect, string $table,string $tableInner,string $champInner,string $champ, string|int|null $condition,){
+        $db = $this->connectDB();
+        $query = "";
+        $query = "SELECT $toSelect FROM `$table` INNER JOIN `$tableInner` ON $table.$champ = $tableInner.$champInner";
+        $sql = $db->prepare($query);
+        $file = fopen("test.txt","w");
+        fwrite($file,$query);
+        fwrite($file,$condition);
+        $sql->execute();
+        $resultQuery = $sql->get_result();
+        $arrayData = [];
+        while($row = mysqli_fetch_assoc($resultQuery))array_push($arrayData,$row);
+        mysqli_close($db) ;
+        return $arrayData ;
+    }
     public function updateInDB(string $table, string $rowToUpdate,mixed $newValue, string $tableCondition ,string $condition){
         $db = $this->connectDB();
         $sql = $db->prepare("UPDATE `$table` SET `$rowToUpdate` = ? WHERE $tableCondition = ?;");
