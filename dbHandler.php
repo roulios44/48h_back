@@ -35,7 +35,9 @@ class dbHandler{
         } else {
             echo "there has been an issue with : " . $sql . " " . mysqli_error($con);
         }
+        $idInsert =$con->insert_id;
         mysqli_close($con);
+        return $idInsert;
     }
     public function getInDB(string $toSelect, string $table, string|null $rowToSearch, string|int|null $condition){
         $db = $this->connectDB();
