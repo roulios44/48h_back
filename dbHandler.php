@@ -5,11 +5,17 @@ class dbHandler{
     private $password;
     private $host;
 
-    function __construct(){
-        $this->name = "company_db";
+    public function __construct(){
+        $this->name = "challenge";
         $this->user = "root";
-        $this->password = "";
+        $this->password = "root";
         $this->host = "localhost";
+    }
+    public function init(string $name,string $user,string $password,string $host){
+        $this->name = $name;
+        $this->user = $user;
+        $this->password = $password;
+        $this->host = $host;
     }
 
     public function connectDB(){
