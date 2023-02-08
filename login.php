@@ -17,10 +17,10 @@ try{
                 array_push($infoConnect,$info);
             }
             if($infoConnect==[]){
-                $infoConnect = array("userType" => $data["userType"]);
+                $infoConnect = array("userType" => $data["userType"], "userID" => $data["id"]);
             }
         }else{
-            $infoConnect = array("userType" => $data["userType"]);
+            $infoConnect = array("userType" => $data["userType"],"userID" => $data["id"]);
         }
         echo(json_encode($infoConnect));
     }else{

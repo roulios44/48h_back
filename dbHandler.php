@@ -103,5 +103,24 @@ class dbHandler{
         mysqli_close($db) ;
         return $arrayData ;
     }
+    public function getInfoCart(int $userId){
+        $db = $this->connectDB();
+        $query = "
+        SELECT commandeLigne.id AS commandeLigneId, commandeLigne.productId,commandeLigne.quantity,commandeLigne.unitePrice,product.name,product.image
+        FROM commandeLigne 
+        INNER JOIN product
+        ON product.id = commandeLigne.productId
+        WHERE commandeLigne.userId = $userId;
+        ";
+        $sql = $db->prepare($query);
+        $sql->execute();
+        $resultQuery = $sql->get_result();
+        $arrayData = [];
+        while($row = mysqli_fetch_assoc($resultQuery)){
+            array_push($arrayData,$row);
+        }
+        mysqli_close($db) ;
+        return $arrayData ;
+    }
 }
 ?>
